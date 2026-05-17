@@ -1,0 +1,22 @@
+SOC-Analyst-Wazuh-Project/
+├── README.md                    # Project overview, architecture, findings
+├── docs/                        # Detailed documentation
+│   ├── architecture/            # Network diagrams, tool stack
+│   ├── attack-simulations/      # Step-by-step attack guides
+│   └── incident-reports/        # Formal analysis of findings
+├── custom-rules/                # Custom Wazuh detection logic
+│   ├── rules/                   # Custom XML rule files
+│   ├── decoders/                # Custom XML decoder files
+│   └── tests/                   # Test logs for validation
+├── scripts/                     # Automation and API scripts
+│   ├── thehive-integration/     # Alert forwarding and case creation
+│   ├── misp-integration/        # Threat intelligence lookup
+│   └── active-responses/        # Custom containment actions
+├── dashboards/                  # Kibana export objects
+│   ├── soc-overview.ndjson      # Main SOC monitoring dashboard
+│   ├── threat-hunting.ndjson    # Proactive hunting dashboard
+│   └── compliance.ndjson        # Policy compliance view
+└── screenshots/                 # Visual evidence for your portfolio
+    ├── alerts.png
+    ├── dashboard.png
+    └── incidents.png
