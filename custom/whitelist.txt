@@ -1,0 +1,35 @@
+# Whitelist Configuration for Wazuh
+# Format: IP_ADDRESS or CIDR_RANGE # COMMENT
+# Any IP in this list will be ignored by active response
+
+# Internal networks (never block)
+127.0.0.1           # Localhost
+10.0.0.0/8          # Private network A
+172.16.0.0/12       # Private network B
+192.168.0.0/16      # Private network C
+
+# Your office/public IPs (add your actual IPs)
+203.0.113.50        # Main office IP
+198.51.100.75       # Branch office
+203.0.113.100       # VPN gateway
+
+# Monitoring and security tools
+192.168.1.50        # Nessus scanner
+192.168.1.51        # Qualys scanner
+192.168.1.52        # Burp Suite machine
+
+# CI/CD and automation
+192.168.2.10        # Jenkins server
+192.168.2.11        # Ansible controller
+192.168.2.12        # Terraform runner
+
+# Cloud provider IPs (if you use cloud)
+# 52.0.0.0/8        # AWS US East (example - adjust to your actual ranges)
+# 35.0.0.0/8        # GCP
+# 13.0.0.0/8        # Azure
+
+# Partners/vendors
+# 192.0.2.5         # Partner VPN
+
+# Add custom whitelist entries below this line
+# =============================================

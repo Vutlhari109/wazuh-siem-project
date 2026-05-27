@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ossec_config>
+
+  <!-- Define the active response command -->
+  <command>
+    <name>block-ssh-attacker</name>
+    <executable>block_ips.sh</executable>
+    <timeout_allowed>yes</timeout_allowed>
+    <timeout>3600</timeout>  <!-- Block for 1 hour -->
+  </command>
+
+  <!-- Define firewall block command (alternative) -->
+  <command>
+    <name>firewall-drop</name>
+    <executable>firewall-drop.sh</executable>
+    <timeout_allowed>yes</timeout_allowed>
+    <timeout>1800</timeout>  <!-- Block for 30 minutes -->
+  </command>
+
+  <!-- Trigger active response when SSH brute force succeeds (Rule 100002) -->
+  <active-response>
+    <command>block-ssh-attacker</command>
+    <location>local</location>
+    <rules_id>100002</rules_id>  <!-- Your SSH brute force success rule -->
+    <level>10</level>
+  </active-response>
+
+  <!-- Also block on multiple failures (Rule 100001) -->
+  <active-response>
+    <command>block-ssh-attacker</command>
+    <location>local</location>
+    <rules_id>100001</rules_id>  <!-- SSH brute force in progress -->
+    <level>8</level>
+    <repeated_offenders>3</repeated_offenders>  <!-- Block after 3 offenses -->
+  </active-response>
+
+  <!-- Email alert for critical events -->
+  <active-response>
+    <command>mail</command>
+    <location>server</location>
+    <rules_id>100002</rules_id>
+    <level>15</level>
+  </active-response>
+
+</ossec_config>

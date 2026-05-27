@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+
+  <!-- 
+    RULE SET: Linux Privilege Escalation Detection
+    MITRE: T1068 (Privilege Escalation), T1548 (Abuse Elevation Control)
+  -->
+
+  <group name="linux_privesc,">
+
+    <!-- Failed sudo attempts -->
+    <rule id="100200" level="7" frequency="3" timeframe="60">
+      <if_matched_sid>5401</if_matched_sid>
+      <same_source_ip />
+      <description>Multiple failed sudo attempts</description>
+    </rule>
+
+    <!-- Successful sudo to root -->
+    <rule id="100201" level="10">
+      <if_sid>5402</if_sid>
+      <match>sudo.*root|sudo su</match>
+      <description>User escalated to root via sudo</description>
+      <mitre>
+        <id>T1548.003</id>
+        <tactic>Privilege Escalation</tactic>
+      </mitre>
+    </rule>
+
+    <!-- SUID binary execution -->
+    <rule id="100202" level="8">
+      <if_sid>80700</if_sid>
+      <match>SUID|setuid</match>
+      <description>SUID binary executed - potential privilege escalation</description>
+      <mitre>
+        <id>T1548.001</id>
+        <tactic>Privilege Escalation</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Crontab modification -->
+    <rule id="100203" level="12">
+      <if_sid>80700</if_sid>
+      <match>crontab|/etc/cron|/var/spool/cron</match>
+      <description>Crontab modified - persistence or privilege escalation</description>
+    </rule>
+
+    <!-- Docker socket access -->
+    <rule id="100204" level="13">
+      <if_sid>80700</if_sid>
+      <match>/var/run/docker.sock|docker run -it</match>
+      <description>Docker socket access - potential container escape</description>
+      <mitre>
+        <id>T1610</id>
+        <tactic>Privilege Escalation</tactic>
+      </mitre>
+    </rule>
+
+  </group>
+
+</ruleset>

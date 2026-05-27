@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decoders>
+
+  <!-- Custom decoder for SSH brute force detection -->
+  <decoder name="custom-ssh-failure">
+    <parent>sshd</parent>
+    <regex>Failed password for (\S+) from (\S+) port \d+</regex>
+    <order>user,srcip</order>
+  </decoder>
+
+  <decoder name="custom-ssh-success">
+    <parent>sshd</parent>
+    <regex>Accepted password for (\S+) from (\S+) port \d+</regex>
+    <order>user,srcip</order>
+  </decoder>
+
+  <!-- Custom decoder for application logs -->
+  <decoder name="custom-app-log">
+    <program_name>^custom-app</program_name>
+    <regex>\[(\w+)\] (\S+): (.*)</regex>
+    <order>level,component,message</order>
+  </decoder>
+
+  <!-- Custom decoder for API access logs -->
+  <decoder name="custom-api-access">
+    <program_name>^api-server</program_name>
+    <regex>(\d+\.\d+\.\d+\.\d+) - (\S+) \[(.*)\] "(\w+) (\S+)" (\d+)</regex>
+    <order>srcip,user,timestamp,method,endpoint,status</order>
+  </decoder>
+
+</decoders>

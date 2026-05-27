@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+
+  <!-- 
+    RULE SET: Windows Persistence Detection
+    MITRE: T1547 (Boot/Logon Autostart), T1543 (Service Creation)
+  -->
+
+  <group name="windows_persistence,">
+
+    <!-- New service creation -->
+    <rule id="100100" level="10">
+      <if_sid>6000</if_sid>
+      <match>Service installed|New service</match>
+      <description>New Windows service installed - potential persistence</description>
+      <mitre>
+        <id>T1543.003</id>
+        <tactic>Persistence</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Scheduled task creation -->
+    <rule id="100101" level="11">
+      <if_sid>6000</if_sid>
+      <match>Task Scheduler|schtasks|Scheduled Task</match>
+      <description>Scheduled task created - persistence mechanism</description>
+      <mitre>
+        <id>T1053.005</id>
+        <tactic>Execution</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Registry run key modification -->
+    <rule id="100102" level="12">
+      <if_sid>6000</if_sid>
+      <match>HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run|HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</match>
+      <description>Registry Run key modified - autostart persistence</description>
+      <mitre>
+        <id>T1547.001</id>
+        <tactic>Persistence</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Mimikatz detection -->
+    <rule id="100103" level="15">
+      <if_sid>6000</if_sid>
+      <match>mimikatz|sekurlsa|privilege::debug</match>
+      <description>Mimikatz detected - credential dumping</description>
+      <mitre>
+        <id>T1003</id>
+        <tactic>Credential Access</tactic>
+      </mitre>
+    </rule>
+
+    <!-- PowerShell suspicious commands -->
+    <rule id="100104" level="10">
+      <if_sid>6000</if_sid>
+      <match>powershell.*-enc|powershell.*downloadstring|powershell.*invoke-expression</match>
+      <description>Suspicious PowerShell command detected</description>
+      <mitre>
+        <id>T1059.001</id>
+        <tactic>Execution</tactic>
+      </mitre>
+    </rule>
+
+  </group>
+
+</ruleset>

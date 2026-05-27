@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+
+  <!-- 
+    RULE SET: Web Application Attack Detection
+    MITRE: T1190 (Exploit Public App), T1133 (External Remote Services)
+  -->
+
+  <group name="web_attacks,">
+
+    <!-- SQL injection attempt -->
+    <rule id="100300" level="10">
+      <if_sid>31101</if_sid>
+      <match>union select|' or '1'='1|drop table|--|;--</match>
+      <description>SQL injection attempt detected</description>
+      <mitre>
+        <id>T1190</id>
+        <tactic>Initial Access</tactic>
+      </mitre>
+    </rule>
+
+    <!-- XSS attempt -->
+    <rule id="100301" level="8">
+      <if_sid>31101</if_sid>
+      <match>&lt;script&gt;|onerror=|alert\(|javascript:</match>
+      <description>Cross-site scripting (XSS) attempt</description>
+      <mitre>
+        <id>T1189</id>
+        <tactic>Initial Access</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Path traversal -->
+    <rule id="100302" level="9">
+      <if_sid>31101</if_sid>
+      <match>\.\./|\.\.\\|/etc/passwd|/proc/self/environ</match>
+      <description>Path traversal / directory traversal attempt</description>
+    </rule>
+
+    <!-- Web shell upload -->
+    <rule id="100303" level="14">
+      <if_sid>31101</if_sid>
+      <match>.php|.jsp|.asp|.aspx|cmd.php|shell.jsp</match>
+      <description>Potential web shell upload detected</description>
+      <mitre>
+        <id>T1505.003</id>
+        <tactic>Persistence</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Admin login attempt -->
+    <rule id="100304" level="7">
+      <if_sid>31101</if_sid>
+      <match>/admin|/wp-admin|/administrator|/login</match>
+      <description>Admin panel access attempt</description>
+    </rule>
+
+  </group>
+
+</ruleset>

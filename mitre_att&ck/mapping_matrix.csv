@@ -1,0 +1,24 @@
+Rule ID,Rule Name,MITRE Tactic,MITRE Technique,Technique ID,Severity,Environment
+100003,SSH Brute Force Success,Credential Access,Password Spraying,T1110.003,CRITICAL,Linux
+100002,SSH Brute Force In Progress,Credential Access,Brute Force,T1110,MEDIUM,Linux
+100100,New Service Installation,Persistence,Boot/Logon Autostart,T1543.003,HIGH,Windows
+100101,Scheduled Task Creation,Persistence,Scheduled Task,T1053.005,HIGH,Windows
+100102,Registry Run Key Modification,Persistence,Registry Run Keys,T1547.001,HIGH,Windows
+100103,Mimikatz Detection,Credential Access,OS Credential Dumping,T1003,CRITICAL,Windows
+100104,Suspicious PowerShell,Execution,PowerShell,T1059.001,HIGH,Windows
+100200,Multiple Failed Sudo,Privilege Escalation,Abuse Elevation Control,T1548,MEDIUM,Linux
+100201,Sudo to Root,Privilege Escalation,Sudo/T1548.003,T1548.003,HIGH,Linux
+100202,SUID Binary Execution,Privilege Escalation,Setuid/Setgid,T1548.001,MEDIUM,Linux
+100203,Crontab Modification,Persistence,Cron,T1053.003,HIGH,Linux
+100204,Docker Socket Access,Privilege Escalation,Container Escape,T1610,CRITICAL,Linux
+100300,SQL Injection,Initial Access,Exploit Public App,T1190,HIGH,Web
+100301,XSS Attempt,Initial Access,Drive-by Compromise,T1189,MEDIUM,Web
+100302,Path Traversal,Initial Access,Exploit Public App,T1190,MEDIUM,Web
+100303,Web Shell Upload,Persistence,Web Shell,T1505.003,CRITICAL,Web
+100400,AWS Root Activity,Initial Access,Valid Accounts,T1078.004,CRITICAL,Cloud
+100401,Suspicious AWS API,Defense Evasion,Impair Defenses,T1562,HIGH,Cloud
+100402,Unusual Location Login,Initial Access,Valid Accounts,T1078,MEDIUM,Cloud
+100500,Privileged Container,Privilege Escalation,Escape to Host,T1611,HIGH,Container
+100501,Sensitive Host Mount,Privilege Escalation,Escape to Host,T1611,HIGH,Container
+100502,Kubectl Exec,Execution,Container Administration,T1609,MEDIUM,Container
+100503,Container Escape Attempt,Privilege Escalation,Escape to Host,T1611,CRITICAL,Container

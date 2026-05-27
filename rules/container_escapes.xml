@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+
+  <!-- 
+    RULE SET: Container Security & Escape Detection
+    MITRE: T1610 (Deploy Container), T1611 (Escape to Host)
+  -->
+
+  <group name="container_escapes,">
+
+    <!-- Privileged container run -->
+    <rule id="100500" level="12">
+      <if_sid>80700</if_sid>
+      <match>docker run --privileged|docker run --cap-add</match>
+      <description>Privileged container started - potential escape vector</description>
+      <mitre>
+        <id>T1611</id>
+        <tactic>Privilege Escalation</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Host mount -->
+    <rule id="100501" level="13">
+      <if_sid>80700</if_sid>
+      <match>/proc|/sys|/var/run/docker.sock</match>
+      <description>Sensitive host mount detected in container</description>
+    </rule>
+
+    <!-- Kubernetes suspicious exec -->
+    <rule id="100502" level="11">
+      <if_sid>92000</if_sid>
+      <match>kubectl exec -it|kubectl run --privileged</match>
+      <description>Suspicious kubectl exec command</description>
+    </rule>
+
+    <!-- Container escape attempt -->
+    <rule id="100503" level="14">
+      <if_sid>80700</if_sid>
+      <match>chroot|unshare|nsenter</match>
+      <description>Potential container escape attempt</description>
+    </rule>
+
+  </group>
+
+</ruleset>

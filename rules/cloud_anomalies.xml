@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+
+  <!-- 
+    RULE SET: Cloud Infrastructure Anomalies
+    MITRE: T1078 (Valid Accounts), T1535 (Unused/Unsupported Regions)
+  -->
+
+  <group name="cloud_anomalies,">
+
+    <!-- Root user activity -->
+    <rule id="100400" level="15">
+      <field name="aws.userIdentity.type">Root</field>
+      <field name="aws.eventName">ConsoleLogin|DeleteTrail|DisableRegion|PutBucketPolicy</field>
+      <description>AWS Root user performed critical action</description>
+      <mitre>
+        <id>T1078.004</id>
+        <tactic>Initial Access</tactic>
+      </mitre>
+    </rule>
+
+    <!-- Suspicious API calls -->
+    <rule id="100401" level="12">
+      <field name="aws.eventName">CreateAccessKey|CreateUser|DeleteTrail|StopLogging</field>
+      <description>Suspicious AWS API call detected</description>
+    </rule>
+
+    <!-- Unusual location login -->
+    <rule id="100402" level="10">
+      <field name="aws.sourceIPAddress" type="pcre2">(?!^expected-ip-range)</field>
+      <description>Login from unusual geographic location</description>
+    </rule>
+
+    <!-- GCP sensitive operation -->
+    <rule id="100403" level="13">
+      <field name="gcp.methodName">setIamPolicy|createServiceAccount|deleteKey</field>
+      <description>Sensitive GCP IAM change detected</description>
+    </rule>
+
+    <!-- Azure privilege escalation -->
+    <rule id="100404" level="12">
+      <field name="azure.operationName">Microsoft.Authorization/roleAssignments/write</field>
+      <description>Azure role assignment change - privilege escalation</description>
+    </rule>
+
+  </group>
+
+</ruleset>
